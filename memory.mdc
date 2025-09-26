@@ -1,18 +1,27 @@
-# MINDFUL
-<--- Long-term memory of all coding agents. Managed by Mindful. DO NOT EDIT outside of mindful source directory. --->
+## Code philosophy
+- Eliminating edge cases is always better than adding conditional judgments. "If you need more than 3 levels of indentation, you're screwed anyway, and should fix your program."
+- Prefer `switch` over `if`
 
-## Architecture
-
-### File Naming Convention
+## File Naming Convention
 - Use simple names like `service/user.go` instead of `service/user_service.go`
 
-## Workflow
+## Model Definition
+- Prefer value over pointer for clean code. If backward compatibility is required, use a partial unique index that only applies to non-empty keys
+
+## How to Run Tests
 - Prefer running single tests instead of package test for performance.
 
-## Code Style & Quality Guidelines
+## How to Write Golang Tests
+- When write test files, ALWAYS use `*_test.go` naming convention
+- Prefer table-driven tests
 
-### Good Code Taste Principles
-- **优先使用 Switch 替代多个 If 语句**
-- **避免过度优化 - 不要为单次使用提取函数**。单次使用的代码保持内联，避免过度抽象
-- 配置验证包含重复检查
-- API 响应格式保持一致
+## Tool Usage
+- Always use `resolve-library-id` to get official documentation for any libraries or frameworks mentioned in requirements
+- Consult official docs before making implementation decisions
+- Verify API contracts and usage patterns from authoritative sources
+
+## Documenting
+- When changed API endpoint param/resp, ALWAYS update Swagger comment if it exist.
+
+## Workflow
+- Never `git commit` unless I asked for it
