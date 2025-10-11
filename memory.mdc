@@ -1,3 +1,6 @@
+## Languages
+- Think in English, respond in Simplified Chinese
+
 ## Code philosophy
 - Eliminating edge cases is always better than adding conditional judgments. "If you need more than 3 levels of indentation, you're screwed anyway, and should fix your program."
 - Prefer `switch` over `if`
