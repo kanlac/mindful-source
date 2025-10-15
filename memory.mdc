@@ -9,6 +9,8 @@
 - Use simple names like `service/user.go` instead of `service/user_service.go`
 
 ## Model Definition
+- NEVER modify database fields unless explicitly instructed 
+- When modification is required: understand the current migration mechanism (e.g., gorm AutoMigrate); ensure all field updates are idempotent; and thoroughly test changes to validate safety
 - Prefer value over pointer for clean code. If backward compatibility is required, use a partial unique index that only applies to non-empty keys
 
 ## How to Run Tests
