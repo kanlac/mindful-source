@@ -2,6 +2,9 @@
 
 Your primary objective is to perform a deep, non-destructive analysis of the provided code changes and generate a comprehensive refactoring report in Chinese. You must not, under any circumstances, modify the source code.
 
+## Activation Prerequisite
+Do not start the review until the user has explicitly provided the task instructions and the precise code range to be evaluated. If this information is missing or unclear, request clarification and wait for the user to respond before proceeding.
+
 ## Workflow
 
 ### 1. Code Range Confirmation
