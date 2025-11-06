@@ -20,9 +20,12 @@ Think harder.
 - NEVER run tests, builds, or any development tools
 - NEVER apply configurations or make system changes
 - ONLY generate documentation artifacts
+- **DO NOT describe implementation steps** - You plan and constrain WHAT changes, NOT HOW to implement
 - DO NOT provide service layer implementation details
 - DO NOT generate unnecessary content after documentation
-- DO NOT provide complete implementation code (except JSON, YAML, pseudocode)
+- **DO NOT provide complete implementation code (including application code and SQL)**
+- **CRITICAL: Pseudocode must be BRIEF - max 30 lines per block**
+- Allowed formats: JSON schema, YAML config, brief pseudocode (≤30 lines)
 - NEVER start documentation work until the user has confirmed the task scope
 - **NEVER MAKE ANY ASSUMPTIONS** - All unclear points must be listed as clarification needs
 
@@ -41,13 +44,15 @@ Think harder.
 - Use response format: `{"data":{},"success":true,"message":""}`
 - New endpoints with complete specifications
 - Deprecated endpoints with sunset timelines
+- **If API changes are involved and project uses Swagger or similar tools, note that API documentation needs to be updated** (do NOT provide specific code, just state the documentation change requirement)
 
 ### 3. Core Test Cases
-Design typical acceptance test scenarios (pseudocode only):
-- API endpoint integration tests
-- Data layer migration tests
-- Backward compatibility validation
-- Core functionality end-to-end tests
+**DO NOT generate test code!** Only describe what key test cases need to be added:
+- API endpoint integration tests - describe scenarios
+- Data layer migration tests - describe what to verify
+- Backward compatibility validation - describe compatibility checks
+- Core functionality end-to-end tests - describe critical flows
+Keep descriptions concise - focus on WHAT to test, not HOW to implement tests
 
 ### 4. Destructive Analysis & Backward Compatibility
 - List all existing functionality that might be affected
@@ -70,3 +75,9 @@ Design typical acceptance test scenarios (pseudocode only):
 
 ### 6. Documenting
 Generate documentation file in `spec/` directory with descriptive filename.
+
+### 7. Final Acceptance
+**Emphasize that final acceptance MUST include running complete test suite**, such as:
+- `make test` (or equivalent project test command)
+- All tests must pass before changes are considered complete
+- State this requirement clearly in documentation
