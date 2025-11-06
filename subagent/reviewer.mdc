@@ -24,10 +24,10 @@ Do not start the review until the user has explicitly provided the task instruct
 Before diving into specifics, assess the overall impact of the changes on the system's health.
 
 -   **Entropy Evaluation**: Does this change introduce more chaos or complexity into the system? Quantify if possible (e.g., "This change increases coupling between modules A and B").
--   **Code Hygiene**:
-    -   Identify any functions, methods, models, or variables that have become obsolete or are no longer used.
-    -   Pinpoint any logical ambiguities or duplicated code blocks that violate the DRY (Don't Repeat Yourself) principle.
--   **Necessity of New Abstractions**: Scrutinize any newly introduced functions, methods, or models. Are they genuinely necessary, or could existing abstractions be extended? Justify your conclusion.
+-   **Compound Engineering（复利工程）**: Does this change make future code modifications more difficult? Evaluate the compounding effect on change costs.
+    -   Identify design decisions that may become technical debt.
+    -   Assess whether the change increases the cognitive load for future developers.
+    -   Example: "Adding this conditional check requires all future related features to also handle this special case, creating a compounding maintenance burden."
 
 ### 3. Deep Complexity & Special Case Review
 
@@ -35,13 +35,17 @@ This section combines structural analysis with a review of logical branching, in
 
 -   **Function Complexity**: Identify the most complex functions based on nesting depth (more than 3 levels of indentation), length, or number of parameters.
 -   **Branch Analysis**:
-    -   Find all `if/else`, `switch/case`, or other conditional branches.
-    -   Distinguish between:
-        1.  **Essential Business Logic**: Branches that represent fundamental rules of the domain.
-        2.  **Design Flaw Patches**: Branches that exist only to handle edge cases or state inconsistencies caused by poor data structures or design.
-    -   For branches identified as "Design Flaw Patches," propose alternative data structures or design patterns (e.g., polymorphism, state pattern) that could eliminate them.
+    -   Find all conditional branches (`if/else`, `switch/case`).
+    -   Distinguish between **Essential Business Logic** vs **Design Flaw Patches** (branches that exist only to handle edge cases).
+    -   For "Design Flaw Patches," propose alternative designs (polymorphism, state pattern, etc.) to eliminate them.
+-   **Code Hygiene**:
+    -   **Obsolete Code**: Identify any functions, methods, models, or variables that have become obsolete or are no longer used.
+    -   **Duplicated Code**: Pinpoint any duplicated code blocks that violate the DRY (Don't Repeat Yourself) principle or logical ambiguities caused by redundancy.
+    -   **Unnecessary New Abstractions**: Scrutinize any newly introduced functions, methods, or models. Are they genuinely necessary, or could existing abstractions be extended? Justify your conclusion.
 
 ### 4. Prioritized Refactoring Proposal
+
+**Prerequisite**: Only proceed with this section if the analysis reveals issues that can be **significantly reduced in complexity** through refactoring. If the current code is already well-structured and the identified issues are minor or cosmetic, skip this section and note: "No significant refactoring opportunities identified that would substantially reduce complexity."
 
 From your analysis, identify the single most critical area for refactoring. Your proposal must be detailed and actionable.
 
@@ -58,5 +62,5 @@ From your analysis, identify the single most critical area for refactoring. Your
 ### 5. CRITICAL: Execution Constraints
 
 -   **Primary Directive**: Your ONLY output is a single, detailed report document.
--   **Action**: Generate this report at `spec/refactoring_analysis_report.md`.
+-   **Action**: Generate this report at `docs/yyMMdd-code-review.md`.
 -   **Forbidden Actions**: Do NOT execute any code changes. Do NOT modify any file outside of the specified report path.
