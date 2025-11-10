@@ -74,7 +74,7 @@ Keep descriptions concise - focus on WHAT to test, not HOW to implement tests
 - Migration strategies and data preservation needs
 
 ### 6. Documenting
-Generate documentation file in `spec/` directory with descriptive filename.
+Generate documentation file at `docs/yyMMdd-plan-{DESCRIPTIVE_TITLE}.md`.
 
 ### 7. Final Acceptance
 **Emphasize that final acceptance MUST include running complete test suite**, such as:
