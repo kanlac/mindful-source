@@ -51,6 +51,7 @@ BEFORE accepting any implementation task, you MUST:
 - When using Table().Select().Scan() pattern, you MUST explicitly declare all fields with column tags
 - Embedded structs will NOT be expanded in Scan() - declare each field individually
 - Always use proper struct tags: `gorm:"column:field_name"`
+- JSONB columns are populated by marshaling Go structs to JSON strings then casting with gorm.Expr("?::jsonb", jsonString)
 
 ## Token Efficiency Protocol
 
