@@ -50,7 +50,31 @@ This section combines structural analysis with a review of logical branching, in
     -   **Duplicated Code**: Pinpoint any duplicated code blocks that violate the DRY (Don't Repeat Yourself) principle or logical ambiguities caused by redundancy.
     -   **Unnecessary New Abstractions**: Scrutinize any newly introduced functions, methods, or models. Are they genuinely necessary, or could existing abstractions be extended? Justify your conclusion.
 
-### 4. Prioritized Refactoring Proposal
+### 4. YAGNI Principle & Legacy Code Cleanup
+
+Apply the "You Aren't Gonna Need It" principle to identify and quantify code that can be safely removed.
+
+-   **Dead Code Inventory**:
+    -   Identify unused functions, methods, classes, interfaces, and variables.
+    -   List deprecated features that are no longer referenced or called.
+    -   Find commented-out code blocks that should be removed (rely on git history instead).
+-   **Over-Engineering Detection**:
+    -   Identify abstractions built for "future flexibility" that are never used (unused interfaces, factory patterns with only one implementation, etc.).
+    -   Find configuration options or feature flags that are no longer needed.
+    -   Spot generic solutions that only have one specific use case.
+-   **Quantifiable Impact Analysis**: For each cleanup opportunity, provide metrics:
+    -   **Lines of Code Reduction**: "Removing function X and its 3 unused helper functions would delete 247 lines."
+    -   **Complexity Reduction**: "Eliminating this abstraction layer reduces cyclomatic complexity by 15 points."
+    -   **Maintenance Burden**: "Removing this feature eliminates 5 test files (320 test lines) that need maintenance."
+    -   **Dependency Cleanup**: "Deleting module Y allows removal of 2 external dependencies (reduces vendor size by 1.2MB)."
+-   **Prioritized Cleanup Roadmap**: Rank cleanup opportunities by impact:
+    1. High-impact, low-risk removals (clear wins)
+    2. Medium-impact removals requiring minor refactoring
+    3. Large-scale simplifications requiring careful migration
+
+For each item, specify: **What to remove → How many lines saved → What risks to consider**
+
+### 5. Prioritized Refactoring Proposal
 
 **Prerequisite**: Only proceed with this section if the analysis reveals issues that can be **significantly reduced in complexity** through refactoring. If the current code is already well-structured and the identified issues are minor or cosmetic, skip this section and note: "No significant refactoring opportunities identified that would substantially reduce complexity."
 
@@ -58,15 +82,21 @@ From your analysis, identify the single most critical area for refactoring. Your
 
 -   **Target Identification**: Clearly state which function, module, or class is the top priority for refactoring.
 -   **Rationale ("Why Here?")**: Explain precisely why this area is the most critical. (e.g., "Refactoring the `calculate_price` function is the top priority because its high cyclomatic complexity and coupling to three other modules make it a frequent source of bugs and difficult to maintain.")
+-   **Refactoring Impact Metrics**: Quantify the expected improvement:
+    -   **Code Reduction**: "Expected to reduce from 150 lines to ~80 lines (47% reduction)."
+    -   **Complexity Improvement**: "Will reduce cyclomatic complexity from 23 to ~8."
+    -   **Deletions Enabled**: "This refactoring enables removal of 3 helper functions (additional 120 lines saved)."
 -   **Comparative Solutions**: Propose at least two distinct refactoring strategies for this target area. For each strategy, present a brief comparison of its pros and cons.
     -   **Option A**: (e.g., Strategy Pattern)
         -   *Pros*: Eliminates conditional branches, highly extensible for future pricing rules.
         -   *Cons*: Higher initial implementation overhead due to new classes.
+        -   *Impact*: Would add ~60 lines initially but enable deletion of 200+ lines of conditional logic.
     -   **Option B**: (e.g., Table-Driven Method)
         -   *Pros*: Simple to understand, configuration is separate from code.
         -   *Cons*: Less flexible for rules that involve complex logic, not just value lookups.
+        -   *Impact*: Immediate net reduction of ~100 lines, lower cognitive complexity.
 
-### 5. CRITICAL: Execution Constraints
+### 6. CRITICAL: Execution Constraints
 
 -   **Primary Directive**: Your ONLY output is a single, detailed report document.
 -   **Action**: Generate this report at `docs/yyMMdd-review-{COMMIT/BRANCH}.md`.
