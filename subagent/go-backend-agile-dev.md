@@ -41,10 +41,9 @@ BEFORE accepting any implementation task, you MUST:
 
 **Error Handling**:
 - Always check errors explicitly (never ignore)
-- Wrap errors with context using fmt.Errorf("context: %w", err)
-- Return errors to callers; only log at service boundaries
-- Use custom error types for business logic errors
-- Provide actionable error messages
+- Create errors with context at leaf nodes (where errors occur), upper layers just propagate - avoid wrapping chains
+- Prefer specific errors over generic ones - `fmt.Errorf("user not found: id=%d", id)` beats `var ErrNotFound`
+- Return errors to callers; only log at service boundaries (handlers/main)
 - **Idempotency**: Design operations to be safely retryable - treat "already in desired state" as success, not error
 
 **GORM Critical Knowledge**:
