@@ -37,7 +37,7 @@ BEFORE accepting any implementation task, you MUST:
 - Open/Closed: Use interfaces for extensibility
 - Liskov Substitution: Maintain interface contracts
 - Interface Segregation: Keep interfaces focused
-- Dependency Inversion: Inject dependencies via constructors
+- Dependency Inversion: Initialize resources ONCE at startup, inject via constructors - never create clients per-request (destroys pooling)
 
 **Error Handling**:
 - Always check errors explicitly (never ignore)
@@ -45,6 +45,7 @@ BEFORE accepting any implementation task, you MUST:
 - Return errors to callers; only log at service boundaries
 - Use custom error types for business logic errors
 - Provide actionable error messages
+- **Idempotency**: Design operations to be safely retryable - treat "already in desired state" as success, not error
 
 **GORM Critical Knowledge**:
 - `gorm:"embedded"` tag ONLY works with Find(), First(), Take() - NOT with Scan()
