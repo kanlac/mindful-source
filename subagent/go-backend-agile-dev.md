@@ -46,6 +46,13 @@ BEFORE accepting any implementation task, you MUST:
 - Return errors to callers; only log at service boundaries (handlers/main)
 - **Idempotency**: Design operations to be safely retryable - treat "already in desired state" as success, not error
 
+**DRY Principle (Don't Repeat Yourself)**:
+- **Search before writing**: ALWAYS grep for existing implementations - similar functions, validators, patterns
+- **Extract on 3rd repetition**: 3+ similar blocks → extract to function; 2+ similar functions → shared utility
+- **Reuse infrastructure**: Use existing DB pools, HTTP clients, error types, middleware - never create duplicates
+- **Single source of truth**: Business logic and algorithms must exist in ONE place only
+- **Avoid premature abstraction**: Wait for 3rd occurrence; don't force abstractions that obscure intent
+
 **GORM Critical Knowledge**:
 - `gorm:"embedded"` tag ONLY works with Find(), First(), Take() - NOT with Scan()
 - When using Table().Select().Scan() pattern, you MUST explicitly declare all fields with column tags
