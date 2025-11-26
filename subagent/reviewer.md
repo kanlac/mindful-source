@@ -48,6 +48,7 @@ This section combines structural analysis with a review of logical branching, in
 -   **Code Hygiene**:
     -   **Obsolete Code**: Identify any functions, methods, models, or variables that have become obsolete or are no longer used.
     -   **Duplicated Code**: Pinpoint any duplicated code blocks that violate the DRY (Don't Repeat Yourself) principle or logical ambiguities caused by redundancy.
+    -   **Cross-Layer Duplication (CRITICAL)**: Search for **specialized method variants** (e.g., `List()` + `ListMarket()`, `Get()` + `GetPublic()`) across DB/App/HTTP layers. Flag when 70%+ logic overlap exists - these should be unified into one method with optional parameters. Calculate entropy cost: lines duplicated × layers affected.
     -   **Unnecessary New Abstractions**: Scrutinize any newly introduced functions, methods, or models. Are they genuinely necessary, or could existing abstractions be extended? Justify your conclusion.
 
 ### 4. YAGNI Principle & Legacy Code Cleanup
@@ -96,7 +97,46 @@ From your analysis, identify the single most critical area for refactoring. Your
         -   *Cons*: Less flexible for rules that involve complex logic, not just value lookups.
         -   *Impact*: Immediate net reduction of ~100 lines, lower cognitive complexity.
 
-### 6. CRITICAL: Execution Constraints
+### 6. Report Format: Concise & Scannable
+
+**Goal**: Reader should grasp key issues in <2 minutes. Use tables, bullet points, metrics over prose.
+
+**Required Structure**:
+```markdown
+# Code Review - {Feature/Commit}
+**Date**: YYYY-MM-DD | **Scope**: {files/commits reviewed}
+
+## 🎯 Executive Summary (2-3 lines max)
+[Most critical finding + recommended action]
+
+## 📊 Entropy Analysis
+| Metric | Before | After | Impact |
+|--------|--------|-------|--------|
+| Cross-layer duplication | X methods | Y methods | ±Z lines |
+| Cyclomatic complexity | N | M | {improved/worsened} |
+
+## 🔴 Critical Issues (P0)
+- **[Issue]**: {file:line} - {1-line description} → **Solution**: {brief fix}
+
+## 🟡 Code Hygiene
+- **Dead code**: X functions ({N} lines) → Delete candidates
+- **Duplication**: {Pattern} appears in {locations} → Unify to {suggestion}
+
+## 💡 Refactoring Proposal (if applicable)
+**Target**: {function/module} | **Why**: {1-line reason} | **Impact**: -{X} lines, -{Y} complexity
+- **Option A**: {approach} - {tradeoff}
+- **Option B**: {approach} - {tradeoff}
+
+## ✅ What Went Well (optional, 1-2 items max)
+```
+
+**Constraints**:
+- Use headers (##) only for sections, tables for comparisons, bullets for lists
+- Each issue: file:line + problem + solution (max 2 lines)
+- Skip empty sections (e.g., if no P0 issues, omit that section)
+- Total report: <300 lines (aim for <150)
+
+### 7. CRITICAL: Execution Constraints
 
 -   **Primary Directive**: Your ONLY output is a single, detailed report document.
 -   **Action**: Generate this report at `docs/yyMMdd-review-{COMMIT/BRANCH}.md`.

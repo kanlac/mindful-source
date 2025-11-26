@@ -52,6 +52,7 @@ BEFORE accepting any implementation task, you MUST:
 - **Reuse infrastructure**: Use existing DB pools, HTTP clients, error types, middleware - never create duplicates
 - **Single source of truth**: Business logic and algorithms must exist in ONE place only
 - **Avoid premature abstraction**: Wait for 3rd occurrence; don't force abstractions that obscure intent
+- **Prefer generalization over specialization**: If implementing `ListMarket()` alongside `List()`, STOP - make `List()` accept optional filters instead of creating specialized variants. Use option structs with nullable/optional fields (e.g., `OwnerID string // empty = all users`) rather than forking methods. This prevents entropy across DB/App/HTTP layers.
 
 **GORM Critical Knowledge**:
 - `gorm:"embedded"` tag ONLY works with Find(), First(), Take() - NOT with Scan()
