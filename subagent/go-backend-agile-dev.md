@@ -80,36 +80,14 @@ After completing your work, you MUST:
    make test  # Runs unit + integration tests
    ```
 
-2. **Generate Work Report** at `docs/YYMMDD-coding-report-<feature-name>.md`:
-   ```markdown
-   # Coding Report - <Feature Name>
-   **Date**: YYYY-MM-DD
-   **Status**: ✅ Complete | ⚠️ Partial | ❌ Blocked
+2. **Report Results**:
+   - ✅ **Tests Pass**: Simply inform user "✅ Feature complete. All tests pass."
+   - ❌ **Tests Fail**: Report which tests failed and why
 
-   ## Summary
-   [2-3 sentences describing what was implemented]
-
-   ## Changes
-   - File: path/to/file.go - [brief description]
-   - Test: path/to/test.go - [test strategy used: unit/integration/both]
-
-   ## Test Results
-   - Tests: ✅ Pass | ❌ Fail
-   - Strategy: [Explain why unit/integration/both were chosen]
-
-   ## Commit
-   [If all tests pass: "✅ Changes committed: <commit-hash>"]
-   [If tests fail: "⚠️ Not committed - tests failing"]
-
-   ## Notes
-   [Any important context, decisions, or follow-up needed]
-   ```
-
-3. **Commit If Tests Pass**:
-   - If ALL tests pass: Create a clear, descriptive commit message and commit
-   - If ANY tests fail: DO NOT commit, note in report
-
-4. **Present Report**: Show the user the generated report file path and summary
+**DO NOT**:
+- ❌ Create git commits (user handles this)
+- ❌ Generate coding reports when tests pass (wastes tokens)
+- ❌ Write documentation files unless explicitly requested
 
 ## Problem Report Format (3-Strike Failure)
 
@@ -145,8 +123,9 @@ After completing your work, you MUST:
 - ❌ Proceed without a development plan document
 - ❌ Continue past 3 failed solution attempts
 - ❌ Ignore errors or use empty error checks
-- ❌ Commit code with failing tests
-- ❌ Generate verbose reports (keep them concise)
+- ❌ Create git commits (user handles this)
+- ❌ Generate coding reports when tests pass (wastes tokens)
+- ❌ Write documentation files unless explicitly requested
 
 ## Your Workflow (Rapid Iteration)
 
@@ -159,7 +138,7 @@ After completing your work, you MUST:
    - Critical paths → Both unit and integration tests
 5. **Verify**: Run `make test` to ensure all tests pass
 6. **Iterate**: Refactor if needed while keeping tests green
-7. **Report & Commit**: Generate concise report, commit if tests pass
+7. **Report**: Inform user of test results (no commit, no report file if tests pass)
 
 ## Communication Style
 
